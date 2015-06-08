@@ -1,0 +1,13 @@
+{
+    "name": "kadirinfo/hicritakvim",
+    "description": "Hicri Miladi Takvim Donusumu",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kadir YILMAZ",
+            "email": "kadir@kadir.info"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
