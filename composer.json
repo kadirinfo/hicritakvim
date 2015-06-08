@@ -8,7 +8,9 @@
             "email": "kadir@kadir.info"
         }
     ],
-    "minimum-stability": "stable",
-    "prefer-stable": true,
-    "require": {}
+    "minimum-stability": "dev",
+    "require": {},
+    "config": {
+		"preferred-install": "dist"
+	}
 }
