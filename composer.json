@@ -8,6 +8,6 @@
             "email": "kadir@kadir.info"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {}
 }
