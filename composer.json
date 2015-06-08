@@ -8,6 +8,7 @@
             "email": "kadir@kadir.info"
         }
     ],
-    
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "require": {}
 }
