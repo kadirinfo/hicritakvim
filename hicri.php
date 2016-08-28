@@ -2,6 +2,7 @@
 namespace hicritakvim;
 
 include_once('hilal.php');
+include_once('calculated.php');
 
 class hicri
 {
@@ -38,36 +39,20 @@ class hicri
             return false; //throw new exception
 
 
-        //$dateParsed = parseDateStr($date);
-        $calculated = self::hicriMiladiOto($date);
+        $hicriStr = $date['year'].'-'.$date['month'].'-'.$date['day'];
 
-        $aybasi = $date;
-        $aybasi['day'] = 1;
+        $hasCalculated = array_search($hicriStr,hicri::$calculated);
 
-        $aybasiMiladi = self::hicriMiladiOto($aybasi);
 
-        $hilalAybasi = self::hilalBul($aybasiMiladi);
-
-        if ($hilalAybasi === false) {
-            $dayOfWeek = hicri::dayOfWeek($calculated);
-            $result = ['date' => $calculated, 'hilal' => false, 'dow'=>$dayOfWeek];
+        if($hasCalculated){
+            $miladiDate = parseDateStr($hasCalculated );
+            $dayOfWeek = hicri::dayOfWeek($miladiDate);
+            $result = ['date' => $miladiDate, 'hilal' => true, 'dow'=>$dayOfWeek];
         } else {
 
-
-            $hilaleGore = mktime(0, 0, 0, $hilalAybasi['month'], $hilalAybasi['day'] + ($date['day'] - 1), $hilalAybasi['year']);
-            $sonuc = parseDateStr(date('Y-m-d', $hilaleGore));
-            $dayOfWeek = hicri::dayOfWeek($sonuc);
-            $result = ['date' => $sonuc, 'hilal' => $hilalAybasi, 'dow'=>$dayOfWeek];
-        }
-
-        //validation
-        if (hicri::hicriMonthLength($date) < $date['day']) {
-            //showError("ayın günü aydan büyük");
-            //$result['error'] = "ayın günü aydan büyük";
-            $result['error'] = "Geçersiz tarih";
-            //todo: yanlış tarih düzeltilebilir mi diye bi bakabiliriz.
-            //$fark =$date['day'] - hicri::hicriMonthLength($date);
-            //$result['date'] = parseDateStr( date('Y-m-d', mktime(0,0,0,$result['date']['month'],$result['date']['day']+$fark,$result['date']['year'])) );
+            $miladiDate = self::hicriMiladiOto($date);
+            $dayOfWeek = hicri::dayOfWeek($miladiDate);
+            $result = ['date' => $miladiDate, 'hilal' => false, 'dow'=>$dayOfWeek];
         }
 
         //miladi tarihin geçerli bir tarih oldugundan emin ol
@@ -171,65 +156,17 @@ class hicri
         if (!is_array($date) || !isset($date['day']) || !isset($date['month']) || !isset($date['year']))
             return false; //throw new exception
 
+        $hasCalculated = array_key_exists(date("Y-m-d", mktime(0, 0, 0, $date['month'], $date['day'], $date['year'])), hicri::$calculated);
+
         $dayOfWeek = hicri::dayOfWeek($date);
 
-        $calculated = self::miladiHicriOto($date);
+        if($hasCalculated){
+            $hicridate = parseDateStr(hicri::$calculated[date("Y-m-d", mktime(0, 0, 0, $date['month'], $date['day'], $date['year']))] );
+            $result = ['date' => $hicridate, 'hilal' => true, 'dow'=>$dayOfWeek];
+        } else {
 
-        $aybasi = $calculated;
-        $aybasi['day'] = 1;
-
-        $aybasiMiladi = self::hicriMiladiOto($aybasi);
-
-        $hilalAybasi = self::hilalBul($aybasiMiladi);
-
-        if ($hilalAybasi === false) {
-            $hicridate = $calculated;
-            $result = ['date' => $calculated, 'hilal' => false];
-        } else { //todo
-            $hilalMiladiTime = mktime(0, 0, 0, $hilalAybasi['month'], $hilalAybasi['day'], $hilalAybasi['year']);
-            $miladiTime = mktime(0, 0, 0, $date['month'], $date['day'], $date['year']);
-
-            //hicri yeni ay mı değil mi
-
-            $hicridate = $calculated;
-            $hicridate['day'] = floor(($miladiTime - $hilalMiladiTime) / (60 * 60 * 24) )+ 1;
-
-            $hicriMonthLength = hicri::hicriMonthLength($hicridate);
-
-            if($hicridate['day']<1){
-                //önceki ay
-                if (--$hicridate['month'] < 1) {
-                    $hicridate['month'] = 12;
-                    $hicridate['year']--;
-                }
-
-                $hicridate['day'] = $hicriMonthLength;
-            }
-
-            $result = ['date' => $hicridate, 'hilal' => $hilalAybasi, 'dow'=>$dayOfWeek];
-
-            /*
-            if ($hicriMonthLength < $hicridate['day']) {
-                //showError("ayın günü aydan büyük");
-                $result['error'] = "Geçersiz tarih";
-            }*/
-        }
-
-        if ($hicridate['day'] >= 27) {
-
-            $yeniAyinHilali = self::hilalBul($hicridate, -1);
-
-            if ($yeniAyinHilali !== false) {
-                if ($hicridate['month'] >= 12) {
-                    $hicridate['month'] = 1;
-                    $hicridate['year']++;
-                } else {
-                    $hicridate['month']++;
-                }
-                $hicridate['day'] = $date['day'] - $yeniAyinHilali['day'];
-
-                $result = ['date' => $hicridate, 'hilal' => parseDateStr($yeniAyinHilali), 'dow'=>$dayOfWeek];
-            }
+            $hicridate = self::miladiHicriOto($date);
+            $result = ['date' => $hicridate, 'hilal' => false, 'dow'=>$dayOfWeek];
         }
 
         if ($resultType == 'string')
@@ -383,6 +320,7 @@ class hicri
 
 
     static public $hilals = []; //hilal.php ile guncellenir
+    static public $calculated = []; //calculated.php ile guncellenir
 
     static public $hicriMonth = [1 => "Muharrem", 2 => "Safer", 3 => "Rebîü'l-Evvel", 4 => "Rebîü'l-Âhir", 5 => "Cemâziye'l-Evvel", 6 => "Cemâziye'l-Âhir", 7 => "Recep", 8 => "Şa'bân", 9 => "Ramazan", 10 => "Şevvâl", 11 => "Zilka'de", 12 => "Zilhicce"];
     static public $miladiMonth = [1 => "Ocak", 2 => "Şubat", 3 => "Mart", 4 => "Nisan", 5 => "Mayıs", 6 => "Haziran", 7 => "Temmuz", 8 => "Ağustos", 9 => "Eylül", 10 => "Ekim", 11 => "Kasım", 12 => "Aralık"];
