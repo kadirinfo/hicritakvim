@@ -85,7 +85,7 @@
 
         } elseif (isset($dateMiladi['error'])) {
             showError($dateMiladi['error']);
-            $dateMiladi = $dateMiladi['date'];
+            $dateMiladi = parseDateStr(date('Y-m-d', time()));
         } else {
             echo '<h1>' . hicri::miladiStr($dateMiladi['date']) . ' ' . $dateMiladi['dow'] . '</h1>';
 

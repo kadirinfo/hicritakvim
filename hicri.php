@@ -51,8 +51,26 @@ class hicri
         } else {
 
             $miladiDate = self::hicriMiladiOto($date);
+
+            if(array_key_exists(date("Y-m-d", mktime(0, 0, 0, $miladiDate['month'], $miladiDate['day'], $miladiDate['year'])), hicri::$calculated)){
+                return ['error'=>'Tarih geçersiz.'];
+            }
+                
+
+
             $dayOfWeek = hicri::dayOfWeek($miladiDate);
             $result = ['date' => $miladiDate, 'hilal' => false, 'dow'=>$dayOfWeek];
+
+
+            if(array_key_exists(date("Y-m-d", mktime(0, 0, 0, $miladiDate['month'], $miladiDate['day'], $miladiDate['year'])), hicri::$calculated)){
+                
+
+                return false;
+                //$result['error'] = 'Tarih geçersiz.';
+
+                //return $result;
+            }
+            
         }
 
         //miladi tarihin geçerli bir tarih oldugundan emin ol
