@@ -56,7 +56,7 @@
         }
 
 
-        if ($dateMiladi['day']<16 && $dateMiladi['month']<7 && $dateMiladi['year']<=622) {
+        if ($dateMiladi['day']<16 && $dateMiladi['month']<=7 && $dateMiladi['year']<=622) {
             //showError('Hatalı tarih girildi.');
             $dateHicri=false;
         }
