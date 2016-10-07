@@ -137,7 +137,7 @@
                 <div class="col-md-2">
                     <select id="yearhicri" name="year" class="form-control">
                         <?php
-                        echo range2optionDesc(1472, 1200, $dateHicri['year']);
+                        echo range2optionDesc(1472, 1, $dateHicri['year']);
                         ?>
                     </select>
                 </div>
