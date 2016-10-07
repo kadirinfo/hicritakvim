@@ -55,6 +55,13 @@
 
         }
 
+
+        if ($dateMiladi['month']<7 && $dateMiladi['year']<=622) {
+            //showError('Hatalı tarih girildi.');
+            $dateHicri=false;
+        }
+
+
         if ($dateHicri === false) {
             showError('dönüşüm hatası oluştu');
         } elseif (isset($dateHicri['error'])) {
@@ -184,39 +191,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-<script>
-    var yearmiladi=$('#yearmiladi').val();
-    var monthmiladi=$('#monthmiladi').val();
-    var daymiladi=$('#daymiladi').val();
 
-    
-    var yearhicri=$('#yearhicri').val();
-    var monthhicri=$('#monthhicri').val();
-    var dayhicri=$('#dayhicri').val();
-
-    $('#m2h').click(function() {
-        if(yearmiladi<=622 && monthmiladi<7  ){
-            alert('Temmuz 622den önceki miladi tarihleri hesaplayamıyoruz.');
-            return false;
-        }     
-
-    });
-
-
-    $('#h2m').click(function() {
-        if(yearhicri<1 && monthhicri<1 && dayhicri<1 ){
-            alert('Hicri 1-1-1 tarihinden önceki tarihleri hesaplayamıyoruz.');
-            return false;
-        }     
-
-    });
-
-
-   
-
-
-
-</script>
 
 
 </body>
