@@ -119,21 +119,21 @@
             <legend>Hicri'den Miladiye</legend>
             <div class="form-group">
                 <div class="col-md-2">
-                    <select id="day" name="day" class="form-control">
+                    <select id="dayhicri" name="day" class="form-control">
                         <?php
                         echo range2option(1, 30, $dateHicri['day']);
                         ?>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <select id="month" name="month" class="form-control">
+                    <select id="monthhicri" name="month" class="form-control">
                         <?php
                         echo array2option(hicri::$hicriMonth, $dateHicri['month']);
                         ?>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select id="year" name="year" class="form-control">
+                    <select id="yearhicri" name="year" class="form-control">
                         <?php
                         echo range2optionDesc(1472, 1200, $dateHicri['year']);
                         ?>
@@ -151,21 +151,21 @@
             <legend>Miladi'den Hicriye</legend>
             <div class="form-group">
                 <div class="col-md-2">
-                    <select id="day" name="day" class="form-control">
+                    <select id="daymiladi" name="day" class="form-control">
                         <?php
                         echo range2option(1, 31, $dateMiladi['day']);
                         ?>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <select id="month" name="month" class="form-control">
+                    <select id="monthmiladi" name="month" class="form-control">
                         <?php
                         echo array2option(hicri::$miladiMonth, $dateMiladi['month']);
                         ?>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select id="year" name="year" class="form-control">
+                    <select id="yearmiladi" name="year" class="form-control">
                         <?php
                         echo range2optionDesc(2050, 622, $dateMiladi['year']);
                         ?>
@@ -183,5 +183,41 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<script>
+    var yearmiladi=$('#yearmiladi').val();
+    var monthmiladi=$('#monthmiladi').val();
+    var daymiladi=$('#daymiladi').val();
+
+    
+    var yearhicri=$('#yearhicri').val();
+    var monthhicri=$('#monthhicri').val();
+    var dayhicri=$('#dayhicri').val();
+
+    $('#m2h').click(function() {
+        if(yearmiladi<=622 && monthmiladi<7  ){
+            alert('Temmuz 622den önceki miladi tarihleri hesaplayamıyoruz.');
+            return false;
+        }     
+
+    });
+
+
+    $('#h2m').click(function() {
+        if(yearhicri<1 && monthhicri<1 && dayhicri<1 ){
+            alert('Hicri 1-1-1 tarihinden önceki tarihleri hesaplayamıyoruz.');
+            return false;
+        }     
+
+    });
+
+
+   
+
+
+
+</script>
+
+
 </body>
 </html>
