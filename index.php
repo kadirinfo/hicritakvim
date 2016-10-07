@@ -167,7 +167,7 @@
                 <div class="col-md-2">
                     <select id="year" name="year" class="form-control">
                         <?php
-                        echo range2optionDesc(2050, 1900, $dateMiladi['year']);
+                        echo range2optionDesc(2050, 622, $dateMiladi['year']);
                         ?>
                     </select>
                 </div>
