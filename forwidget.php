@@ -61,7 +61,7 @@
         } else {
             echo '<h3>' . hicri::hicriStr($dateHicri['date']) . ' ' . $dateHicri['dow'] . '</h3>';
 
-            if (isset($dateHicri['hilal']) && is_array($dateHicri['hilal']) && mktime(0, 0, 0, $dateMiladi['month'], $dateMiladi['day'], $dateMiladi['year']) > mktime(0, 0, 0, 11, 30, 1978)) {
+            if (true===$dateHicri['hilal']  && mktime(0, 0, 0, $dateMiladi['month'], $dateMiladi['day'], $dateMiladi['year']) > mktime(0, 0, 0, 11, 30, 1978)) {
                 if (mktime(0, 0, 0, $dateMiladi['month'], $dateMiladi['day'], $dateMiladi['year']) < time())
                     echo '<footer>hilal görünümü dikkate alınmıştır </footer>';
                 elseif (mktime(0, 0, 0, $dateMiladi['month'], $dateMiladi['day'], $dateMiladi['year']) < mktime(0, 0, 0, 1, 22, 2023))
@@ -82,11 +82,11 @@
 
         } elseif (isset($dateMiladi['error'])) {
             showError($dateMiladi['error']);
-            $dateMiladi = $dateMiladi['date'];
+            $dateMiladi = parseDateStr(date('Y-m-d', time()));
         } else {
             echo '<h3>' . hicri::miladiStr($dateMiladi['date']) . ' ' . $dateMiladi['dow'] . '</h3>';
 
-            if (isset($dateMiladi['hilal']) && is_array($dateMiladi['hilal'])) {
+            if ($dateMiladi['hilal']===true) {
 
                 if (mktime(0, 0, 0, $dateMiladi['date']['month'], $dateMiladi['date']['day'], $dateMiladi['date']['year']) < time() && mktime(0, 0, 0, $dateMiladi['date']['month'], $dateMiladi['date']['day'], $dateMiladi['date']['year']) > mktime(0, 0, 0, 11, 30, 1978))
                     echo '<footer>hilal görünümü dikkate alınmıştır</footer>';
