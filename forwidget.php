@@ -52,13 +52,13 @@
 
         }
         if ($dateMiladi['day']<16 && $dateMiladi['month']<=7 && $dateMiladi['year']<=622) {
-            //showError('Hatalı tarih girildi.');
+            showError('16 Temmuz 622\'den daha önceki tarihler hesaplanmamaktadır! Lütfen başka bir tarih giriniz!');
             $dateHicri=false;
         }
 
 
         if ($dateHicri === false) {
-            showError('dönüşüm hatası oluştu');
+            //showError('dönüşüm hatası oluştu');
         } elseif (isset($dateHicri['error'])) {
             showError($dateHicri['error']);
             $dateHicri = $dateHicri['date'];
