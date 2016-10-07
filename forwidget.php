@@ -51,12 +51,11 @@
             showError('Hatalı tarih girildi - ' . $dateMiladi['day'] . ' ' . hicri::$miladiMonth[$dateMiladi['month']] . ' ' . $dateMiladi['year'] . ' olarak düzeltildi');
 
         }
-
-        if ($dateMiladi['month']<7 && $dateMiladi['year']<=622) {
+        if ($dateMiladi['day']<16 && $dateMiladi['month']<7 && $dateMiladi['year']<=622) {
             //showError('Hatalı tarih girildi.');
             $dateHicri=false;
-
         }
+
 
         if ($dateHicri === false) {
             showError('dönüşüm hatası oluştu');
